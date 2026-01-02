@@ -15,24 +15,35 @@ body {
   text-align: center;
 }
 
-/* Logo container */
+/* Logo text */
 .logo {
-  padding: 20px 0;
+  padding: 30px 0 10px 0;
 }
 
 .logo-link {
+  text-decoration: none;
+  color: inherit;
   display: inline-block;
   transition: transform 0.15s ease;
-}
-
-.logo-link img {
-  width: 250px; /* Adjust size to match original logo usage */
-  height: auto;
 }
 
 .logo-link:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+
+.pixel {
+  font-size: 48px;
+  letter-spacing: 4px;
+  color: #4fd1ff;
+  text-shadow: 0 0 8px #4fd1ff;
+}
+
+.portal {
+  font-size: 54px;
+  letter-spacing: 6px;
+  color: #b47cff;
+  text-shadow: 0 0 12px #7c5cff;
 }
 
 /* Game panel */
@@ -163,9 +174,10 @@ body {
 <body>
 
 <header class="logo">
-  <!-- Clickable original logo -->
+  <!-- Clickable text logo -->
   <a href="library.html" class="logo-link">
-    <img src="pixelportal_logo.png" alt="Pixel Portal Logo">
+    <span class="pixel">PIXEL</span>
+    <span class="portal">PORTAL</span>
   </a>
 </header>
 
