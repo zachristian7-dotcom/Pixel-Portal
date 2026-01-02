@@ -25,11 +25,35 @@ body {
   color: inherit;
   display: inline-block;
   transition: transform 0.15s ease;
+  position: relative;
 }
 
 .logo-link:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+
+/* Tooltip for logo */
+.logo-link::after {
+  content: "Click to go to the Library";
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.75);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.logo-link:hover::after {
+  opacity: 1;
 }
 
 .pixel {
@@ -55,6 +79,44 @@ body {
   border-radius: 16px;
   text-align: left;
   line-height: 1.6;
+}
+
+/* Form styling */
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+form button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4fd1ff, #7c5cff);
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+form button:hover {
+  transform: scale(1.05);
+}
+
+/* Success message */
+#success-message {
+  display: none;
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0, 128, 0, 0.8);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
 }
 
 /* Bottom nav */
@@ -100,13 +162,19 @@ body {
 
 <div class="panel">
   <h2>Request a Game</h2>
-  <p>Have a game you’d like to see on Pixel Portal? Submit your requests here!</p>
-  <form>
-    <input type="text" placeholder="Game Name" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px;">
-    <textarea placeholder="Description or link" style="width: 100%; padding: 10px; border-radius: 8px;"></textarea>
-    <br>
-    <button type="submit" style="margin-top:10px; padding: 10px 20px; border-radius: 8px; background: #4fd1ff; color:white; border:none;">Submit</button>
+  <p>Have a game you’d like to see on Pixel Portal? Submit your request below!</p>
+
+  <!-- Formsubmit form -->
+  <form id="request-form" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" target="_blank">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+
+    <input type="text" name="Game Name" placeholder="Game Name" required>
+    <textarea name="Description / Link" placeholder="Description or link" rows="5" required></textarea>
+    <button type="submit">Submit Request</button>
   </form>
+
+  <div id="success-message">Thanks! Your game request has been sent. ✅</div>
 </div>
 
 <div class="bottom-nav">
@@ -115,6 +183,20 @@ body {
   <a href="about.html">About</a>
   <a href="request.html">Request</a>
 </div>
+
+<script>
+// Show success message after submission
+const form = document.getElementById('request-form');
+const success = document.getElementById('success-message');
+
+form.addEventListener('submit', function(e) {
+  // small delay to allow Formsubmit to open email redirect
+  setTimeout(() => {
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }, 100);
+});
+</script>
 
 </body>
 </html>
