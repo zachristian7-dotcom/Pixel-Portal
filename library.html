@@ -15,15 +15,19 @@ body {
   text-align: center;
 }
 
+/* Logo container */
 .logo {
-  padding: 30px 0 10px 0;
+  padding: 20px 0;
 }
 
 .logo-link {
-  text-decoration: none;
-  color: inherit;
   display: inline-block;
   transition: transform 0.15s ease;
+}
+
+.logo-link img {
+  width: 250px; /* Adjust size to match original logo usage */
+  height: auto;
 }
 
 .logo-link:hover {
@@ -31,6 +35,7 @@ body {
   transform: scale(1.05);
 }
 
+/* Game panel */
 .panel {
   max-width: 1000px;
   margin: 20px auto;
@@ -40,6 +45,7 @@ body {
   padding: 10px;
 }
 
+/* Game card styling */
 .game-card {
   background: rgba(0,0,0,0.65);
   border-radius: 16px;
@@ -157,14 +163,14 @@ body {
 <body>
 
 <header class="logo">
-  <a href="library.html" class="logo-link" id="logo-link">
-    <span class="pixel">PIXEL</span>
-    <span class="portal">PORTAL</span>
+  <!-- Clickable original logo -->
+  <a href="library.html" class="logo-link">
+    <img src="pixelportal_logo.png" alt="Pixel Portal Logo">
   </a>
 </header>
 
 <div class="panel" id="game-panel">
-  <!-- Game cards will be dynamically inserted here -->
+  <!-- Game cards will appear here -->
 </div>
 
 <div id="game-container">
@@ -180,7 +186,7 @@ body {
 </div>
 
 <script>
-// Your games array
+// Games array
 const games = [
   { name: "Ring Runner", id: "414716080", thumbnail: "ringrunner.png", description: "Run through rings and avoid obstacles! Version 2.04.6", featured: true },
   { name: "Undertale", id: "791527350", thumbnail: "undertale.png", description: "Play one of the most popular indie RPG's out there!" },
@@ -214,7 +220,6 @@ games.forEach(game => {
 
   if (!card.classList.contains('coming-soon')) {
     card.addEventListener('click', () => {
-      // Hide library, show embedded game
       panel.style.display = 'none';
       gameContainer.style.display = 'block';
       gameFrame.src = `https://turbowarp.org/${game.id}/embed`;
@@ -224,7 +229,7 @@ games.forEach(game => {
   panel.appendChild(card);
 });
 
-// Back button functionality
+// Back button
 backButton.addEventListener('click', () => {
   gameContainer.style.display = 'none';
   panel.style.display = 'grid';
