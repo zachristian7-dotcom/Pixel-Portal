@@ -2,52 +2,62 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Request a Game | Pixel Portal</title>
+<title>Request Games - Pixel Portal</title>
 <link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   margin: 0;
-  min-height: 100vh;
   font-family: 'Trebuchet MS', Arial, sans-serif;
-  color: white;
   background: url("galaxy.gif") center / cover fixed;
+  color: white;
   text-align: center;
 }
 
+/* Logo text */
 .logo {
-  padding: 40px 20px 10px;
+  padding: 30px 0 10px 0;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.logo-link:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .pixel {
-  font-size: 36px;
+  font-size: 48px;
+  letter-spacing: 4px;
   color: #4fd1ff;
-  text-shadow: 0 0 6px #4fd1ff;
+  text-shadow: 0 0 8px #4fd1ff;
 }
 
 .portal {
-  display: block;
-  font-size: 40px;
+  font-size: 54px;
+  letter-spacing: 6px;
   color: #b47cff;
-  text-shadow: 0 0 10px #7c5cff;
+  text-shadow: 0 0 12px #7c5cff;
 }
 
+/* Panel */
 .panel {
-  max-width: 700px;
-  margin: 30px auto;
+  max-width: 600px;
+  margin: 40px auto;
   padding: 30px;
   background: rgba(0,0,0,0.65);
   border-radius: 16px;
-  text-align: center;
+  text-align: left;
+  line-height: 1.6;
 }
 
-iframe {
-  width: 100%;
-  height: 600px;
-  border: none;
-  border-radius: 12px;
-}
-
+/* Bottom nav */
 .bottom-nav {
   position: fixed;
   bottom: 20px;
@@ -82,16 +92,21 @@ iframe {
 <body>
 
 <header class="logo">
-  <span class="pixel">PIXEL</span>
-  <span class="portal">PORTAL</span>
+  <a href="library.html" class="logo-link">
+    <span class="pixel">PIXEL</span>
+    <span class="portal">PORTAL</span>
+  </a>
 </header>
 
 <div class="panel">
   <h2>Request a Game</h2>
-  <p>Use the form below to request a game to be added to Pixel Portal!</p>
-
-  <!-- Embed your Google Form here -->
-  <iframe src="https://forms.gle/wc9UdUCgbtrR7qzE6" frameborder="0" scrolling="yes"></iframe>
+  <p>Have a game you’d like to see on Pixel Portal? Submit your requests here!</p>
+  <form>
+    <input type="text" placeholder="Game Name" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px;">
+    <textarea placeholder="Description or link" style="width: 100%; padding: 10px; border-radius: 8px;"></textarea>
+    <br>
+    <button type="submit" style="margin-top:10px; padding: 10px 20px; border-radius: 8px; background: #4fd1ff; color:white; border:none;">Submit</button>
+  </form>
 </div>
 
 <div class="bottom-nav">
