@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pixel Portal</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  color: white;
+  background: url("galaxy.gif") center / cover fixed;
+  text-align: center;
+}
+
+.logo {
+  text-align: center;
+  padding: 50px 20px 20px;
+}
+
+.pixel {
+  font-size: 48px;
+  letter-spacing: 4px;
+  color: #4fd1ff;
+  text-shadow: 0 0 8px #4fd1ff;
+}
+
+.portal {
+  display: block;
+  font-size: 54px;
+  letter-spacing: 6px;
+  color: #b47cff;
+  text-shadow: 0 0 12px #7c5cff;
+}
+
+.tagline {
+  margin-top: 10px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #ddd;
+  /* Fade in/out animation */
+  animation: fadeText 3s ease-in-out infinite alternate;
+}
+
+.panel {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(0,0,0,0.65);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 32px;
+  font-size: 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #4fd1ff, #7c5cff);
+  color: white;
+  transition: all 0.2s ease;
+  /* Floating animation */
+  animation: floatButton 3s ease-in-out infinite;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+
+.bottom-nav a {
+  text-decoration: none;
+  color: #4fd1ff;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.bottom-nav a:hover {
+  background: #4fd1ff;
+  color: white;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeText {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes floatButton {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+</style>
+</head>
+
+<body>
+
+<header class="logo">
+  <span class="pixel">PIXEL</span>
+  <span class="portal">PORTAL</span>
+  <div class="tagline">STEP INTO THE PORTAL</div>
+</header>
+
+<div class="panel">
+  Pixel Portal is a free Scratch game site built by students, for students.<br><br>
+  No downloads. No accounts. Just click and play.
+  <br><br>
+  <a class="button" href="library.html">Enter Pixel Portal →</a>
+</div>
+
+<div class="bottom-nav">
+  <a href="welcome.html">Welcome</a>
+  <a href="library.html">Library</a>
+  <a href="about.html">About</a>
+  <a href="request.html">Request</a>
+</div>
+
+</body>
+</html>

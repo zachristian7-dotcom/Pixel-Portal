@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pixel Portal Library</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  color: white;
+  background: url("galaxy.gif") center / cover fixed;
+  text-align: center;
+}
+
+.logo { text-align: center; padding: 40px 20px 10px; }
+.pixel { font-size: 36px; color: #4fd1ff; text-shadow: 0 0 6px #4fd1ff; }
+.portal { display: block; font-size: 40px; color: #b47cff; text-shadow: 0 0 10px #7c5cff; }
+
+.panel {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 25px;
+  background: rgba(0,0,0,0.65);
+  border-radius: 16px;
+}
+
+#searchBar {
+  width: 60%;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+}
+
+.game-card {
+  position: relative;
+  background: #1b1b1b;
+  padding: 15px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(79,209,255,0.4);
+}
+
+/* Featured game outline */
+.game-card.featured {
+  border: 5px solid yellow;
+}
+
+/* Tooltip description */
+.game-card .desc {
+  visibility: hidden;
+  opacity: 0;
+  width: 180px;
+  background-color: rgba(0,0,0,0.85);
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  padding: 8px;
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.game-card:hover .desc {
+  visibility: visible;
+  opacity: 1;
+}
+
+.game-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 12px 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.bottom-nav a {
+  text-decoration: none;
+  color: #4fd1ff;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.bottom-nav a:hover {
+  background: #4fd1ff;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<header class="logo">
+  <span class="pixel">PIXEL</span>
+  <span class="portal">PORTAL</span>
+</header>
+
+<div class="panel">
+  <h2 style="text-align:center;">Game Library</h2>
+  
+  <input type="text" id="searchBar" onkeyup="filterGames()" placeholder="Search games...">
+
+  <div class="game-grid" id="gameGrid"></div>
+</div>
+
+<div class="bottom-nav">
+  <a href="welcome.html">Welcome</a>
+  <a href="library.html">Library</a>
+  <a href="about.html">About</a>
+  <a href="request.html">Request</a>
+</div>
+
+<script>
+// ✅ List of games: add new games here
+const games = [
+  { name: "Ring Runner", id: "414716080", thumbnail: "ringrunner.png", description: "Run through rings and avoid obstacles! Version 2.04.6", featured: true },
+  { name: "Undertale", id: "791527350", thumbnail: "undertale.png", description: "Play one of the most popular indie RPG's out there!" },
+  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
+  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
+  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
+  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
+  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
+  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" }
+];
+
+const grid = document.getElementById('gameGrid');
+
+function loadGames() {
+  grid.innerHTML = '';
+  games.forEach(game => {
+    const card = document.createElement('div');
+    card.className = 'game-card' + (game.featured ? ' featured' : '');
+    card.setAttribute('data-title', game.name);
+    card.onclick = () => playGame(`https://turbowarp.org/${game.id}/embed`);
+    card.innerHTML = `
+      <img src="${game.thumbnail}" alt="${game.name}">
+      <h3>${game.name}</h3>
+      <div class="desc">${game.description}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function playGame(url) {
+  window.location.href = "play.html?game=" + encodeURIComponent(url);
+}
+
+function filterGames() {
+  const input = document.getElementById('searchBar').value.toLowerCase();
+  const cards = document.querySelectorAll('.game-card');
+  cards.forEach(card => {
+    const title = card.getAttribute('data-title').toLowerCase();
+    card.style.display = title.includes(input) ? '' : 'none';
+  });
+}
+
+// Easter egg example
+document.addEventListener('keydown', e => {
+  // Ctrl + Shift + P triggers a portal effect
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'p'){
+    alert("✨ You found a secret portal! ✨");
+  }
+});
+
+window.onload = loadGames;
+</script>
+
+</body>
+</html>
