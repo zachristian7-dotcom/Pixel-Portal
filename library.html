@@ -9,90 +9,120 @@
 <style>
 body {
   margin: 0;
-  min-height: 100vh;
   font-family: 'Trebuchet MS', Arial, sans-serif;
-  color: white;
   background: url("galaxy.gif") center / cover fixed;
+  color: white;
   text-align: center;
 }
 
-.logo { text-align: center; padding: 40px 20px 10px; }
-.pixel { font-size: 36px; color: #4fd1ff; text-shadow: 0 0 6px #4fd1ff; }
-.portal { display: block; font-size: 40px; color: #b47cff; text-shadow: 0 0 10px #7c5cff; }
+.logo {
+  padding: 30px 0 10px 0;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.logo-link:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
 
 .panel {
   max-width: 1000px;
-  margin: 30px auto;
-  padding: 25px;
-  background: rgba(0,0,0,0.65);
-  border-radius: 16px;
-}
-
-#searchBar {
-  width: 60%;
-  padding: 10px 15px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-}
-
-.game-grid {
+  margin: 20px auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
+  padding: 10px;
 }
 
 .game-card {
+  background: rgba(0,0,0,0.65);
+  border-radius: 16px;
+  overflow: hidden;
   position: relative;
-  background: #1b1b1b;
-  padding: 15px;
-  border-radius: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-align: center;
 }
 
-.game-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(79,209,255,0.4);
-}
-
-/* Featured game outline */
 .game-card.featured {
   border: 5px solid yellow;
 }
 
-/* Tooltip description */
-.game-card .desc {
-  visibility: hidden;
-  opacity: 0;
-  width: 180px;
-  background-color: rgba(0,0,0,0.85);
-  color: #fff;
-  text-align: center;
-  border-radius: 10px;
-  padding: 8px;
-  position: absolute;
-  bottom: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: opacity 0.3s;
-  font-size: 14px;
-  pointer-events: none;
+.game-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
 }
 
-.game-card:hover .desc {
-  visibility: visible;
+.game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #fff;
+}
+
+.game-info {
+  padding: 10px;
+  font-size: 14px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.game-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.game-description {
+  font-size: 13px;
+  color: #ddd;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.game-card:hover .game-description {
   opacity: 1;
 }
 
-.game-card img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
+/* Coming Soon styling */
+.game-card.coming-soon {
+  opacity: 0.5;
+  cursor: default;
+  filter: grayscale(50%);
 }
 
+.game-card.coming-soon:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Embedded game container */
+#game-container {
+  display: none;
+  margin: 20px auto;
+}
+
+#back-button {
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #4fd1ff, #7c5cff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#back-button:hover {
+  transform: scale(1.05);
+}
+
+/* Bottom nav */
 .bottom-nav {
   position: fixed;
   bottom: 20px;
@@ -127,16 +157,19 @@ body {
 <body>
 
 <header class="logo">
-  <span class="pixel">PIXEL</span>
-  <span class="portal">PORTAL</span>
+  <a href="library.html" class="logo-link" id="logo-link">
+    <span class="pixel">PIXEL</span>
+    <span class="portal">PORTAL</span>
+  </a>
 </header>
 
-<div class="panel">
-  <h2 style="text-align:center;">Game Library</h2>
-  
-  <input type="text" id="searchBar" onkeyup="filterGames()" placeholder="Search games...">
+<div class="panel" id="game-panel">
+  <!-- Game cards will be dynamically inserted here -->
+</div>
 
-  <div class="game-grid" id="gameGrid"></div>
+<div id="game-container">
+  <button id="back-button">← Back to Library</button>
+  <iframe id="game-frame" width="800" height="600" style="border:0;" allowfullscreen></iframe>
 </div>
 
 <div class="bottom-nav">
@@ -147,7 +180,7 @@ body {
 </div>
 
 <script>
-// ✅ List of games: add new games here
+// Your games array
 const games = [
   { name: "Ring Runner", id: "414716080", thumbnail: "ringrunner.png", description: "Run through rings and avoid obstacles! Version 2.04.6", featured: true },
   { name: "Undertale", id: "791527350", thumbnail: "undertale.png", description: "Play one of the most popular indie RPG's out there!" },
@@ -159,46 +192,44 @@ const games = [
   { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" }
 ];
 
-const grid = document.getElementById('gameGrid');
+const panel = document.getElementById('game-panel');
+const gameContainer = document.getElementById('game-container');
+const gameFrame = document.getElementById('game-frame');
+const backButton = document.getElementById('back-button');
 
-function loadGames() {
-  grid.innerHTML = '';
-  games.forEach(game => {
-    const card = document.createElement('div');
-    card.className = 'game-card' + (game.featured ? ' featured' : '');
-    card.setAttribute('data-title', game.name);
-    card.onclick = () => playGame(`https://turbowarp.org/${game.id}/embed`);
-    card.innerHTML = `
-      <img src="${game.thumbnail}" alt="${game.name}">
-      <h3>${game.name}</h3>
-      <div class="desc">${game.description}</div>
-    `;
-    grid.appendChild(card);
-  });
-}
+// Render game cards
+games.forEach(game => {
+  const card = document.createElement('div');
+  card.className = 'game-card';
+  if (game.featured) card.classList.add('featured');
+  if (game.name.toLowerCase() === "coming soon") card.classList.add('coming-soon');
 
-function playGame(url) {
-  window.location.href = "play.html?game=" + encodeURIComponent(url);
-}
+  card.innerHTML = `
+    <img src="${game.thumbnail}" alt="${game.name}">
+    <div class="game-info">
+      <div class="game-name">${game.name}</div>
+      <div class="game-description">${game.description}</div>
+    </div>
+  `;
 
-function filterGames() {
-  const input = document.getElementById('searchBar').value.toLowerCase();
-  const cards = document.querySelectorAll('.game-card');
-  cards.forEach(card => {
-    const title = card.getAttribute('data-title').toLowerCase();
-    card.style.display = title.includes(input) ? '' : 'none';
-  });
-}
-
-// Easter egg example
-document.addEventListener('keydown', e => {
-  // Ctrl + Shift + P triggers a portal effect
-  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'p'){
-    alert("✨ You found a secret portal! ✨");
+  if (!card.classList.contains('coming-soon')) {
+    card.addEventListener('click', () => {
+      // Hide library, show embedded game
+      panel.style.display = 'none';
+      gameContainer.style.display = 'block';
+      gameFrame.src = `https://turbowarp.org/${game.id}/embed`;
+    });
   }
+
+  panel.appendChild(card);
 });
 
-window.onload = loadGames;
+// Back button functionality
+backButton.addEventListener('click', () => {
+  gameContainer.style.display = 'none';
+  panel.style.display = 'grid';
+  gameFrame.src = '';
+});
 </script>
 
 </body>
