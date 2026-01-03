@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Private Notes – Pixel Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Trebuchet MS, Arial, sans-serif;
+  background: #0b1020;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+textarea {
+  width: 90%;
+  height: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 2px solid #4fd1ff;
+  background: #111827;
+  color: white;
+  resize: vertical;
+}
+
+textarea[disabled] {
+  background: #333;
+  color: #aaa;
+}
+</style>
+</head>
+<body>
+
+<h1>Private Notes</h1>
+<p id="info">Only the owner can type in this box.</p>
+<textarea id="note" disabled placeholder="You can't type here..."></textarea>
+
+<script>
+const ownerEmail = "zachristian7@gmail.com"; // change this to your email
+
+// Ask for email when page loads
+const email = prompt("Enter your email to edit the notes:");
+
+// Enable typing only if email matches
+const textarea = document.getElementById("note");
+if(email && email.toLowerCase() === ownerEmail.toLowerCase()) {
+  textarea.disabled = false;
+  textarea.placeholder = "Type your notes here...";
+  document.getElementById("info").textContent = "You can edit the notes.";
+} else {
+  textarea.disabled = true;
+  document.getElementById("info").textContent = "You can view the notes, but you cannot edit.";
+}
+</script>
+
+</body>
+</html>
