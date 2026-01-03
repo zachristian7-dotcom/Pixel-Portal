@@ -2,251 +2,238 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Pixel Portal Library</title>
+<title>Pixel Portal – Library</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ---------- GLOBAL ---------- */
 body {
   margin: 0;
-  font-family: 'Trebuchet MS', Arial, sans-serif;
+  font-family: "Trebuchet MS", Arial, sans-serif;
   background: url("galaxy.gif") center / cover fixed;
   color: white;
   text-align: center;
 }
 
-/* Logo text */
-.logo {
-  padding: 30px 0 10px 0;
-}
-
-.logo-link {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
+/* ---------- LOGO ---------- */
+header {
+  padding: 30px 20px 10px;
+  cursor: pointer;
   transition: transform 0.15s ease;
 }
 
-.logo-link:hover {
-  cursor: pointer;
-  transform: scale(1.05);
+header:hover {
+  transform: scale(0.95);
 }
 
 .pixel {
-  font-size: 48px;
+  font-size: 44px;
   letter-spacing: 4px;
   color: #4fd1ff;
   text-shadow: 0 0 8px #4fd1ff;
 }
 
 .portal {
-  font-size: 54px;
+  display: block;
+  font-size: 50px;
   letter-spacing: 6px;
   color: #b47cff;
   text-shadow: 0 0 12px #7c5cff;
 }
 
-/* Game panel */
-.panel {
-  max-width: 1000px;
+/* ---------- FILTER BAR ---------- */
+.filter-bar {
   margin: 20px auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 10px;
 }
 
-/* Game card styling */
-.game-card {
-  background: rgba(0,0,0,0.65);
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+select {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  background: rgba(255,255,255,0.9);
   cursor: pointer;
 }
 
-.game-card.featured {
-  border: 5px solid yellow;
+/* ---------- GAME GRID ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.game-card {
+  background: rgba(0,0,0,0.65);
+  border-radius: 18px;
+  padding: 15px;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
 }
 
 .game-card img {
   width: 100%;
-  height: 150px;
-  object-fit: cover;
+  border-radius: 14px;
 }
 
-.game-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #fff;
+.game-card h3 {
+  margin: 12px 0 6px;
 }
 
-.game-info {
-  padding: 10px;
-  font-size: 14px;
-  height: 80px;
-  overflow: hidden;
-}
-
-.game-name {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.game-description {
+.game-card p {
   font-size: 13px;
-  color: #ddd;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  opacity: 0.9;
 }
 
-.game-card:hover .game-description {
-  opacity: 1;
+/* ---------- CATEGORIES ---------- */
+.categories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
 }
 
-/* Coming Soon styling */
-.game-card.coming-soon {
-  opacity: 0.5;
-  cursor: default;
-  filter: grayscale(50%);
+.category {
+  background: rgba(255,255,255,0.18);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
 }
 
-.game-card.coming-soon:hover {
-  transform: none;
-  box-shadow: none;
+/* ---------- FEATURED GAME ---------- */
+.featured {
+  outline: 6px solid gold;
 }
 
-/* Embedded game container */
-#game-container {
-  display: none;
-  margin: 20px auto;
-}
-
-#back-button {
-  margin-bottom: 10px;
-  padding: 8px 16px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(135deg, #4fd1ff, #7c5cff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-#back-button:hover {
-  transform: scale(1.05);
-}
-
-/* Bottom nav */
-.bottom-nav {
-  position: fixed;
-  bottom: 20px;
+.featured::after {
+  content: "FEATURED GAME";
+  position: absolute;
+  bottom: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: white;
-  padding: 12px 20px;
-  border-radius: 20px;
-  display: flex;
-  gap: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-  z-index: 999;
-}
-
-.bottom-nav a {
-  text-decoration: none;
-  color: #4fd1ff;
-  font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.bottom-nav a:hover {
-  background: #4fd1ff;
+  background: gold;
   color: white;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 12px;
+  white-space: nowrap;
 }
 </style>
 </head>
 
 <body>
 
-<header class="logo">
-  <!-- Clickable text logo -->
-  <a href="library.html" class="logo-link">
-    <span class="pixel">PIXEL</span>
-    <span class="portal">PORTAL</span>
-  </a>
+<!-- LOGO -->
+<header onclick="location.href='library.html'">
+  <span class="pixel">PIXEL</span>
+  <span class="portal">PORTAL</span>
 </header>
 
-<div class="panel" id="game-panel">
-  <!-- Game cards will appear here -->
+<!-- FILTER -->
+<div class="filter-bar">
+  <select id="sortSelect" onchange="renderGames()">
+    <option value="newest">Newest First</option>
+    <option value="oldest">Oldest First</option>
+    <option value="title">Title (A–Z)</option>
+    <option value="relevant">Relevant</option>
+  </select>
 </div>
 
-<div id="game-container">
-  <button id="back-button">← Back to Library</button>
-  <iframe id="game-frame" width="800" height="600" style="border:0;" allowfullscreen></iframe>
-</div>
-
-<div class="bottom-nav">
-  <a href="welcome.html">Welcome</a>
-  <a href="library.html">Library</a>
-  <a href="about.html">About</a>
-  <a href="request.html">Request</a>
-</div>
+<!-- GAME GRID -->
+<div id="game-list" class="grid"></div>
 
 <script>
-// Games array
+/* ---------- GAME DATA ---------- */
 const games = [
-  { name: "Ring Runner", id: "414716080", thumbnail: "ringrunner.png", description: "Run through rings and avoid obstacles! Version 2.04.6", featured: true },
-  { name: "Undertale", id: "1209796928", thumbnail: "undertale.png", description: "Play one of the most popular indie RPG's out there!" },
-  { name: "Jevil Fight Simulator", id: "600739641", thumbnail: "jevilfight.png", description: "Face off against Jevil from Deltarune Chapter 1!" },
-  { name: "Asgore Fight Simulator", id: "671171726", thumbnail: "asgore.webp", description: "Face off against Asgore from Undertale!" },
-  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
-  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
-  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" },
-  { name: "Coming Soon", id: "1260987440", thumbnail: "comingsoon.jpeg", description: "Coming Soon" }
+  {
+    name: "Ring Runner",
+    id: "414716080",
+    thumbnail: "ringrunner.png",
+    description: "Run around a box while avoiding rings!",
+    categories: ["Platformer", "Endless"],
+    added: "2026-01-01",
+    featured: true
+  },
+  {
+    name: "Undertale",
+    id: "791527350",
+    thumbnail: "undertale.png",
+    description: "A legendary indie RPG experience.",
+    categories: ["RPG", "Undertale"],
+    added: "2026-01-01"
+  },
+  {
+    name: "Jevil Fight Simulator",
+    id: "600739641",
+    thumbnail: "jevilfight.png",
+    description: "Battle Jevil from Deltarune!",
+    categories: ["Boss Fight", "Deltarune"],
+    added: "2026-01-02"
+  },
+  {
+    name: "Asgore Fight Simulator",
+    id: "671171726",
+    thumbnail: "asgore.webp",
+    description: "Face off against Asgore!",
+    categories: ["Boss Fight", "Undertale"],
+    added: "2026-01-02"
+  },
+  {
+    name: "Coming Soon",
+    id: "0",
+    thumbnail: "comingsoon.jpeg",
+    description: "More games coming soon!",
+    categories: ["Coming Soon"],
+    added: "2025-12-27"
+  }
 ];
 
-const panel = document.getElementById('game-panel');
-const gameContainer = document.getElementById('game-container');
-const gameFrame = document.getElementById('game-frame');
-const backButton = document.getElementById('back-button');
+/* ---------- RENDER ---------- */
+function renderGames() {
+  const list = document.getElementById("game-list");
+  list.innerHTML = "";
 
-// Render game cards
-games.forEach(game => {
-  const card = document.createElement('div');
-  card.className = 'game-card';
-  if (game.featured) card.classList.add('featured');
-  if (game.name.toLowerCase() === "coming soon") card.classList.add('coming-soon');
+  const mode = document.getElementById("sortSelect").value;
+  let sorted = [...games];
 
-  card.innerHTML = `
-    <img src="${game.thumbnail}" alt="${game.name}">
-    <div class="game-info">
-      <div class="game-name">${game.name}</div>
-      <div class="game-description">${game.description}</div>
-    </div>
-  `;
-
-  if (!card.classList.contains('coming-soon')) {
-    card.addEventListener('click', () => {
-      panel.style.display = 'none';
-      gameContainer.style.display = 'block';
-      gameFrame.src = `https://turbowarp.org/${game.id}/embed`;
-    });
+  if (mode === "newest") {
+    sorted.sort((a, b) => new Date(b.added) - new Date(a.added));
+  } else if (mode === "oldest") {
+    sorted.sort((a, b) => new Date(a.added) - new Date(b.added));
+  } else if (mode === "title") {
+    sorted.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (mode === "relevant") {
+    sorted.sort(() => Math.random() - 0.5);
   }
 
-  panel.appendChild(card);
-});
+  sorted.forEach(game => {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    if (game.featured) card.classList.add("featured");
 
-// Back button
-backButton.addEventListener('click', () => {
-  gameContainer.style.display = 'none';
-  panel.style.display = 'grid';
-  gameFrame.src = '';
-});
+    card.innerHTML = `
+      <img src="${game.thumbnail}" alt="${game.name}">
+      <h3>${game.name}</h3>
+      <p>${game.description}</p>
+      <div class="categories">
+        ${game.categories.map(cat => `<span class="category">${cat}</span>`).join("")}
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+renderGames();
 </script>
 
 </body>
