@@ -7,25 +7,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ---------- GLOBAL ---------- */
 body {
   margin: 0;
   font-family: "Trebuchet MS", Arial, sans-serif;
   background: url("galaxy.gif") center / cover fixed;
   color: white;
   text-align: center;
+  padding-bottom: 120px; /* space for bottom bar */
 }
 
-/* ---------- LOGO ---------- */
+/* LOGO */
 header {
   padding: 30px 20px 10px;
   cursor: pointer;
   transition: transform 0.15s ease;
 }
-
-header:hover {
-  transform: scale(0.95);
-}
+header:hover { transform: scale(0.95); }
 
 .pixel {
   font-size: 44px;
@@ -33,7 +30,6 @@ header:hover {
   color: #4fd1ff;
   text-shadow: 0 0 8px #4fd1ff;
 }
-
 .portal {
   display: block;
   font-size: 50px;
@@ -42,21 +38,18 @@ header:hover {
   text-shadow: 0 0 12px #7c5cff;
 }
 
-/* ---------- FILTER BAR ---------- */
+/* FILTER */
 .filter-bar {
   margin: 20px auto;
 }
-
 select {
   padding: 10px 16px;
   border-radius: 12px;
   border: none;
   font-size: 14px;
-  background: rgba(255,255,255,0.9);
-  cursor: pointer;
 }
 
-/* ---------- GAME GRID ---------- */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -65,34 +58,22 @@ select {
   max-width: 1200px;
   margin: auto;
 }
-
 .game-card {
   background: rgba(0,0,0,0.65);
   border-radius: 18px;
   padding: 15px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s;
   position: relative;
 }
-
-.game-card:hover {
-  transform: translateY(-6px);
-}
-
+.game-card:hover { transform: translateY(-6px); }
 .game-card img {
   width: 100%;
   border-radius: 14px;
 }
+.game-card h3 { margin: 12px 0 6px; }
+.game-card p { font-size: 13px; opacity: 0.9; }
 
-.game-card h3 {
-  margin: 12px 0 6px;
-}
-
-.game-card p {
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-/* ---------- CATEGORIES ---------- */
+/* CATEGORIES */
 .categories {
   display: flex;
   justify-content: center;
@@ -100,7 +81,6 @@ select {
   gap: 6px;
   margin-top: 8px;
 }
-
 .category {
   background: rgba(255,255,255,0.18);
   padding: 4px 10px;
@@ -108,11 +88,10 @@ select {
   font-size: 11px;
 }
 
-/* ---------- FEATURED GAME ---------- */
+/* FEATURED */
 .featured {
   outline: 6px solid gold;
 }
-
 .featured::after {
   content: "FEATURED GAME";
   position: absolute;
@@ -125,20 +104,44 @@ select {
   font-size: 12px;
   font-weight: bold;
   border-radius: 12px;
-  white-space: nowrap;
+}
+
+/* 🔻 BOTTOM BAR 🔻 */
+.bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 12px 20px;
+  border-radius: 22px;
+  display: flex;
+  gap: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  z-index: 999;
+}
+.bottom-nav a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #4fd1ff;
+  padding: 8px 16px;
+  border-radius: 14px;
+  transition: 0.2s;
+}
+.bottom-nav a:hover {
+  background: #4fd1ff;
+  color: black;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGO -->
 <header onclick="location.href='library.html'">
   <span class="pixel">PIXEL</span>
   <span class="portal">PORTAL</span>
 </header>
 
-<!-- FILTER -->
 <div class="filter-bar">
   <select id="sortSelect" onchange="renderGames()">
     <option value="newest">Newest First</option>
@@ -148,87 +151,57 @@ select {
   </select>
 </div>
 
-<!-- GAME GRID -->
 <div id="game-list" class="grid"></div>
 
+<!-- ✅ BOTTOM NAV (THIS IS THE BAR) -->
+<div class="bottom-nav">
+  <a href="welcome.html">Welcome</a>
+  <a href="library.html">Library</a>
+  <a href="about.html">About</a>
+  <a href="request.html">Request</a>
+</div>
+
 <script>
-/* ---------- GAME DATA ---------- */
 const games = [
   {
     name: "Ring Runner",
-    id: "414716080",
     thumbnail: "ringrunner.png",
-    description: "Run around a box while avoiding rings!",
+    description: "Run through rings and avoid obstacles!",
     categories: ["Platformer", "Endless"],
-    added: "2026-01-01",
+    added: "2026-01-02",
     featured: true
   },
   {
     name: "Undertale",
-    id: "791527350",
     thumbnail: "undertale.png",
-    description: "A legendary indie RPG experience.",
+    description: "A legendary indie RPG.",
     categories: ["RPG", "Undertale"],
     added: "2026-01-01"
-  },
-  {
-    name: "Jevil Fight Simulator",
-    id: "600739641",
-    thumbnail: "jevilfight.png",
-    description: "Battle Jevil from Deltarune!",
-    categories: ["Boss Fight", "Deltarune"],
-    added: "2026-01-02"
-  },
-  {
-    name: "Asgore Fight Simulator",
-    id: "671171726",
-    thumbnail: "asgore.webp",
-    description: "Face off against Asgore!",
-    categories: ["Boss Fight", "Undertale"],
-    added: "2026-01-02"
-  },
-  {
-    name: "Coming Soon",
-    id: "0",
-    thumbnail: "comingsoon.jpeg",
-    description: "More games coming soon!",
-    categories: ["Coming Soon"],
-    added: "2028-01-02"
   }
 ];
 
-/* ---------- RENDER ---------- */
 function renderGames() {
   const list = document.getElementById("game-list");
   list.innerHTML = "";
 
-  const mode = document.getElementById("sortSelect").value;
   let sorted = [...games];
+  const mode = sortSelect.value;
 
-  if (mode === "newest") {
-    sorted.sort((a, b) => new Date(b.added) - new Date(a.added));
-  } else if (mode === "oldest") {
-    sorted.sort((a, b) => new Date(a.added) - new Date(b.added));
-  } else if (mode === "title") {
-    sorted.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (mode === "relevant") {
-    sorted.sort(() => Math.random() - 0.5);
-  }
+  if (mode === "newest") sorted.sort((a,b)=>new Date(b.added)-new Date(a.added));
+  if (mode === "oldest") sorted.sort((a,b)=>new Date(a.added)-new Date(b.added));
+  if (mode === "title") sorted.sort((a,b)=>a.name.localeCompare(b.name));
+  if (mode === "relevant") sorted.sort(()=>Math.random()-0.5);
 
   sorted.forEach(game => {
     const card = document.createElement("div");
-    card.className = "game-card";
-    if (game.featured) card.classList.add("featured");
-
+    card.className = "game-card" + (game.featured ? " featured" : "");
     card.innerHTML = `
-      <img src="${game.thumbnail}" alt="${game.name}">
+      <img src="${game.thumbnail}">
       <h3>${game.name}</h3>
       <p>${game.description}</p>
       <div class="categories">
-        ${game.categories.map(cat => `<span class="category">${cat}</span>`).join("")}
-      </div>
-    `;
-
+        ${game.categories.map(c=>`<span class="category">${c}</span>`).join("")}
+      </div>`;
     list.appendChild(card);
   });
 }
