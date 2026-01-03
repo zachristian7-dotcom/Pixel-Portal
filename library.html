@@ -171,49 +171,24 @@ input[type="text"], select {
 </div>
 
 <script>
+// ---------------- GAMES ----------------
 const games = [
-  {
-    name: "Ring Runner",
-    thumbnail: "ringrunner.png",
-    description: "Run around a box while avoiding rings and collecting power-ups!",
-    categories: ["Platformer", "Endless"],
-    added: "2026-01-01",
-    featured: true
-  },
-  {
-    name: "Undertale",
-    thumbnail: "undertale.png",
-    description: "A legendary indie RPG experience.",
-    categories: ["RPG", "Undertale"],
-    added: "2026-01-02"
-  },
-  {
-    name: "Jevil Fight Simulator",
-    thumbnail: "jevilfight.png",
-    description: "Battle Jevil from Deltarune!",
-    categories: ["Boss Fight", "Deltarune"],
-    added: "2026-01-02"
-  },
-  {
-    name: "Asgore Fight Simulator",
-    thumbnail: "asgore.webp",
-    description: "Face off against Asgore!",
-    categories: ["Boss Fight", "Undertale"],
-    added: "2026-01-02"
-  },
-  {
-    name: "Coming Soon",
-    thumbnail: "comingsoon.jpeg",
-    description: "More games coming soon!",
-    categories: ["Coming Soon"],
-    added: "2028-01-27"
-  }
+  { name: "Ring Runner", thumbnail: "ringrunner.png", description: "Run through rings and avoid obstacles!", categories:["Platformer","Endless"], added:"2026-01-02", featured:true },
+  { name: "Undertale", thumbnail: "undertale.png", description: "A legendary indie RPG experience.", categories:["RPG","Undertale"], added:"2026-01-01" },
+  { name: "Jevil Fight Simulator", thumbnail: "jevilfight.png", description: "Battle Jevil from Deltarune!", categories:["Boss Fight","Undertale"], added:"2025-12-30" },
+  { name: "Asgore Fight Simulator", thumbnail: "asgore.webp", description: "Face off against Asgore!", categories:["Boss Fight","Undertale"], added:"2025-12-28" },
+  { name: "Coming Soon", thumbnail: "comingsoon.jpeg", description: "More games coming soon!", categories:["Coming Soon"], added:"2025-12-27" },
+  { name: "Coming Soon", thumbnail: "comingsoon.jpeg", description: "More games coming soon!", categories:["Coming Soon"], added:"2025-12-27" },
+  { name: "Coming Soon", thumbnail: "comingsoon.jpeg", description: "More games coming soon!", categories:["Coming Soon"], added:"2025-12-27" },
+  { name: "Coming Soon", thumbnail: "comingsoon.jpeg", description: "More games coming soon!", categories:["Coming Soon"], added:"2025-12-27" }
 ];
 
+// ---------------- RENDER FUNCTION ----------------
 function renderGames() {
   const list = document.getElementById("game-list");
   const query = searchInput.value.toLowerCase();
   const mode = sortSelect.value;
+
   let filtered = games.filter(g =>
     g.name.toLowerCase().includes(query) ||
     g.categories.join(" ").toLowerCase().includes(query)
@@ -225,7 +200,6 @@ function renderGames() {
   if (mode === "relevant") filtered.sort(()=>Math.random()-0.5);
 
   list.innerHTML = "";
-
   filtered.forEach(game => {
     const card = document.createElement("div");
     card.className = "game-card" + (game.featured ? " featured" : "");
@@ -240,8 +214,112 @@ function renderGames() {
     list.appendChild(card);
   });
 }
-
 renderGames();
+
+// ---------------- EASTER EGGS ----------------
+
+// 1️⃣ Logo click streak
+let logoClicks = 0;
+document.querySelector("header").addEventListener("click", () => {
+  logoClicks++;
+  if (logoClicks === 7) { alert("You found the portal’s core 👁️"); logoClicks=0; }
+});
+
+// 2️⃣ Secret cursor sparkle (featured hover)
+const sparkleCursor = document.createElement("div");
+sparkleCursor.style.position="absolute";
+sparkleCursor.style.pointerEvents="none";
+sparkleCursor.style.fontSize="16px";
+sparkleCursor.style.color="gold";
+document.body.appendChild(sparkleCursor);
+document.querySelectorAll(".featured").forEach(card=>{
+  card.addEventListener("mouseenter",e=>{
+    let x=e.clientX,y=e.clientY;
+    sparkleCursor.textContent="✨";
+    sparkleCursor.style.left=x+"px";
+    sparkleCursor.style.top=y+"px";
+    setTimeout(()=>sparkleCursor.textContent="",3000);
+  });
+});
+
+// 3️⃣ Typing “undertale”
+let typed="";
+document.addEventListener("keydown", e=>{
+  typed+=e.key.toLowerCase();
+  if(typed.includes("undertale")){
+    document.body.style.filter="hue-rotate(90deg)";
+    setTimeout(()=>document.body.style.filter="",1500);
+    typed="";
+  }
+});
+
+// 4️⃣ Fake glitched card
+document.querySelectorAll(".game-card").forEach(card=>{
+  card.addEventListener("mouseenter",()=>{
+    if(card.querySelector("h3")?.textContent==="Coming Soon"){
+      card.style.transform="rotate(-5deg)";
+      setTimeout(()=>card.style.transform="translateY(0)",500);
+    }
+  });
+});
+
+// 5️⃣ Time-based egg
+const now=new Date();
+if(now.getHours()===15 && now.getMinutes()===0){
+  document.body.style.backgroundBlendMode="darken";
+  setTimeout(()=>document.body.style.backgroundBlendMode="",6000);
+}
+
+// 6️⃣ Konami Code
+const konami=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+let konamiIndex=0;
+document.addEventListener("keydown", e=>{
+  if(e.key===konami[konamiIndex]){
+    konamiIndex++;
+    if(konamiIndex===konami.length){
+      alert("Old-school detected! Retro mode activated!");
+      document.body.style.filter="invert(1)";
+      setTimeout(()=>document.body.style.filter="",2000);
+      konamiIndex=0;
+    }
+  } else konamiIndex=0;
+});
+
+// 7️⃣ Hidden category
+const hiddenCategory={name:"Secret Portal",thumbnail:"comingsoon.jpeg",description:"You found the hidden category!",categories:["Secret"],added:"2026-01-01"};
+function addHiddenCategory(){const list=document.getElementById("game-list");const card=document.createElement("div");card.className="game-card";card.innerHTML=`<img src="${hiddenCategory.thumbnail}"><h3>${hiddenCategory.name}</h3><p>${hiddenCategory.description}</p><div class="categories">${hiddenCategory.categories.map(c=>`<span class="category">${c}</span>`).join("")}</div>`;list.appendChild(card);}
+
+// 8️⃣ Fake 404 page
+if(window.location.pathname.includes("404.html")){
+  document.body.innerHTML=`<h1 style="font-size:48px;margin-top:40px;color:#ff0">You fell out of the portal!</h1><p><a href="library.html" style="color:#4fd1ff;font-size:24px;">Climb back in</a></p>`;
+}
+
+// 9️⃣ Broken logo hover
+document.querySelector("header").addEventListener("mouseenter",()=>{setTimeout(()=>headerLogo.style.transform="rotate(5deg)",500);setTimeout(()=>headerLogo.style.transform="scale(1)",1500);});
+
+// 🔟 Secret dev console
+document.addEventListener("keydown", e=>{
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==="p"){
+    const term=document.createElement("div");
+    term.style.position="fixed";
+    term.style.top="10%";
+    term.style.left="50%";
+    term.style.transform="translateX(-50%)";
+    term.style.width="400px";
+    term.style.height="300px";
+    term.style.background="rgba(0,0,0,0.9)";
+    term.style.color="lime";
+    term.style.padding="10px";
+    term.style.overflowY="auto";
+    term.style.borderRadius="12px";
+    term.innerHTML="<p>Dev Console Activated<br>Type 'help'</p>";
+    document.body.appendChild(term);
+  }
+});
+
+// 1️⃣1️⃣ Secret ending
+let foundEasterEggs=0;
+function incrementEggs(){foundEasterEggs++;if(foundEasterEggs>=5){alert("You’ve mastered the Pixel Portal! 🎉");}}
 </script>
 
 </body>
