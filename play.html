@@ -124,7 +124,7 @@ const game = games.find(g => g.id === gameId);
 const frame = document.getElementById("gameFrame");
 
 if (game) {
-  frame.src = `/games/${game.id}/index.html`; // load self-hosted game
+  frame.src = `${game.id}/index.html`; // load self-hosted game
   document.title = `Play | ${game.name} | Pixel Portal`;
 } else {
   frame.src = "";
