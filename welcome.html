@@ -83,15 +83,23 @@ body {
   transform: translateX(-50%);
   background: white;
   padding: 12px 20px;
-  border-radius: 20px;
+  border-radius: 22px;
   display: flex;
   gap: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
 
 .bottom-nav a {
   text-decoration: none;
-  color: #4fd1ff;
   font-weight: bold;
+  color: #4fd1ff;
+  padding: 8px 16px;
+  border-radius: 14px;
+}
+
+.bottom-nav a:hover {
+  background: #4fd1ff;
+  color: white;
 }
 
 .teacher-safe-indicator {
@@ -124,11 +132,12 @@ body.teacher-safe .teacher-safe-indicator {
   <br><br>
   No downloads. No accounts. Just click and play.
   <br><br>
-  <a class="button" href="library.html">Enter Pixel Portal →</a>
+  <p>Make sure to join our <a href="https://discord.gg/RQKpSeeNmh">Discord Server</a>!</p>
+  <a class="button" href="library.html">Enter Pixel Portal</a>
 </div>
 
 <div class="bottom-nav">
-  <a href="index.html">Welcome</a>
+  <a href="welcome.html">Welcome</a>
   <a href="library.html">Library</a>
   <a href="about.html">About</a>
   <a href="request.html">Request</a>
