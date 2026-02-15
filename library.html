@@ -5,7 +5,6 @@
 <title>Pixel Portal – Library</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body {
   margin: 0;
@@ -175,7 +174,6 @@ input, select {
 }
 </style>
 </head>
-
 <body>
 
 <header onclick="location.href='library.html'">
@@ -195,12 +193,6 @@ input, select {
 
 <div id="game-list" class="grid"></div>
 
-<!-- GAME MODAL -->
-<div id="gameModal">
-  <button id="closeBtn" onclick="closeGame()">Close</button>
-  <iframe id="gameFrame" allowfullscreen></iframe>
-</div>
-
 <div class="bottom-nav">
   <a href="welcome.html">Welcome</a>
   <a href="library.html">Library</a>
@@ -210,11 +202,11 @@ input, select {
 
 <script>
 const games = [
-  { name:"Ring Runner", id:"414716080", thumbnail:"ringrunner.png", description:"Run through rings and avoid obstacles!", categories:["Platformer"], added:"2026-01-02", featured:true },
-  { name:"Undertale", id:"791527350", thumbnail:"undertale.png", description:"A legendary indie RPG.", categories:["RPG"], added:"2026-01-01" },
-  { name:"Jevil Fight Simulator", id:"600739641", thumbnail:"jevilfight.png", description:"Battle Jevil!", categories:["Boss Fight"], added:"2025-12-30" },
-  { name:"Asgore Fight Simulator", id:"671171726", thumbnail:"asgore.webp", description:"Fight Asgore!", categories:["Boss Fight"], added:"2025-12-28" },
-  { name:"Coming Soon", id:null, thumbnail:"comingsoon.jpeg", description:"More games coming soon!", categories:["Coming Soon"], added:"2025-12-27" }
+  { name:"Ring Runner", id:"1209796928", thumbnail:"images/ringrunner.png", description:"Run through rings and avoid obstacles!", categories:["Platformer"], added:"2026-01-02", featured:true },
+  { name:"Undertale", id:"791527350", thumbnail:"images/undertale.png", description:"A legendary indie RPG.", categories:["RPG"], added:"2026-01-01" },
+  { name:"Jevil Fight Simulator", id:"600739641", thumbnail:"images/jevilfight.png", description:"Battle Jevil!", categories:["Boss Fight"], added:"2025-12-30" },
+  { name:"Asgore Fight Simulator", id:"671171726", thumbnail:"images/asgore.webp", description:"Fight Asgore!", categories:["Boss Fight"], added:"2025-12-28" },
+  { name:"Coming Soon", id:null, thumbnail:"images/comingsoon.jpeg", description:"More games coming soon!", categories:["Coming Soon"], added:"2025-12-27" }
 ];
 
 function renderGames() {
@@ -244,19 +236,10 @@ function renderGames() {
         ${game.categories.map(c=>`<span class="category">${c}</span>`).join("")}
       </div>
     `;
-    if (game.id) card.onclick=()=>openGame(game.id);
+    // Redirect to play.html
+    if (game.id) card.onclick=()=>window.location.href=`play.html?game=${game.id}`;
     list.appendChild(card);
   });
-}
-
-function openGame(id){
-  gameFrame.src=`https://turbowarp.org/${id}/embed`;
-  gameModal.style.display="flex";
-}
-
-function closeGame(){
-  gameFrame.src="";
-  gameModal.style.display="none";
 }
 
 renderGames();

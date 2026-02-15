@@ -5,7 +5,6 @@
 <title>Play | Pixel Portal</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body {
   margin: 0;
@@ -90,7 +89,6 @@ iframe {
 }
 </style>
 </head>
-
 <body>
 
 <header class="logo">
@@ -112,12 +110,28 @@ iframe {
 </div>
 
 <script>
+const games = [
+  { name:"Ring Runner", id:"1209796928", description:"Run through rings and avoid obstacles!" },
+  { name:"Undertale", id:"791527350", description:"A legendary indie RPG." },
+  { name:"Jevil Fight Simulator", id:"600739641", description:"Battle Jevil!" },
+  { name:"Asgore Fight Simulator", id:"671171726", description:"Fight Asgore!" }
+];
+
 const params = new URLSearchParams(window.location.search);
-document.getElementById("gameFrame").src =
-  params.get("game") || "https://turbowarp.org/414716080/embed";
+const gameId = params.get("game");
+
+const game = games.find(g => g.id === gameId);
+const frame = document.getElementById("gameFrame");
+
+if (game) {
+  frame.src = `/games/${game.id}/index.html`; // load self-hosted game
+  document.title = `Play | ${game.name} | Pixel Portal`;
+} else {
+  frame.src = "";
+  frame.insertAdjacentHTML("beforebegin", "<p style='color:white;font-size:18px;'>Game not found. Please go back to the library.</p>");
+}
 
 function goFullscreen() {
-  const frame = document.getElementById("gameFrame");
   if (frame.requestFullscreen) frame.requestFullscreen();
   else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
   else if (frame.msRequestFullscreen) frame.msRequestFullscreen();
